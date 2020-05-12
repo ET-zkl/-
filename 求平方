@@ -1,0 +1,36 @@
+求Pow（x，n)
+1、这个真的毫无意义，但也不能忘了它！
+double myPow(double x, int n) 
+        return pow(x,n);
+    }
+    
+2、快速幂、递归
+ double fn(double x,long long n){
+        if(n==0){
+            return 1.0;
+        }
+        double y=fn(x,n/2);
+        return n%2==0?y*y:y*y*x;
+    }
+ double myPow(double x, int n) {
+        long long N=n;
+        return N>0?fn(x,N):1.0/fn(x,-N);
+    }
+    
+3、快速幂、迭代（妙极了）
+ double fn(double x,long long n){
+         double x_c=x;        
+         double ans=1.0;        
+         while(n!=0){
+         	  if(n%2==1){//判断对应二进制末尾是否为1
+         		  ans*=x_c;//如果为1，把贡献算进去            
+         	  }
+         	  x_c*=x_c;//记住贡献            
+         	  n/=2;//往后找
+          }        
+          return ans；
+}
+double myPow(double x, int n) {
+         long long N=n;//整型最小为-2的23次方，最大-2的23次方-1，取反会溢出，所以转换成长整型        
+         return N>0?fn(x,N):1.0/fn(x,-N);    
+ }
